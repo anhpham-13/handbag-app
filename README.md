@@ -21,6 +21,7 @@ Tài liệu này được viết chi tiết từ A-Z với ngôn ngữ dễ hi�
 | **Expo Location & Maps** | Thư viện hỗ trợ lấy tọa độ GPS từ thiết bị và hiển thị bản đồ trực quan. | Dùng bản đồ Leaflet.js chạy trong WebView (`react-native-webview`) để đảm bảo hiển thị đồng bộ, mượt mà trên cả Android/iOS mà không cần cấu hình Google Maps SDK phức tạp. |
 | **Expo Image & ImagePicker** | Thư viện quản lý ảnh nâng cao (caching) và truy cập camera/thư viện ảnh điện thoại. | Giúp tải ảnh cực nhanh nhờ cơ chế lưu bộ đệm (cache) trên ổ cứng và hỗ trợ chụp ảnh để tìm kiếm phong cách túi xách bằng AI. |
 | **expo-blur** | Thư viện tạo hiệu ứng kính mờ (Glassmorphism). | Dùng cho CustomTabBar tạo hiệu ứng thanh điều hướng lơ lửng mờ, tăng tính thẩm mỹ cao cấp cho UI. |
+| **react-native-maps** | Thư viện bản đồ native cho React Native (dự phòng). | Hiện tại app dùng Leaflet.js qua WebView, nhưng `react-native-maps` được giữ như dependency dự phòng để chuyển đổi sang native map khi cần. |
 
 ---
 
@@ -112,12 +113,18 @@ Gồm nhiều thành phần giao diện nhỏ tự dựng (Custom Components) th
     *   `ProductCard`: Thẻ hiển thị sản phẩm dạng lưới 2 cột.
     *   `SearchBar`: Ô tìm kiếm có nút xóa nhanh ký tự.
     *   `BrandFilter`: Thanh cuộn ngang các thương hiệu túi xách dưới dạng chip tròn.
+    *   `FavoriteButton`: Nút trái tim yêu thích với hiệu ứng animation, dùng chung ở nhiều màn hình.
+    *   `DiscountBadge`: Badge hiển thị phần trăm giảm giá góc trên ảnh sản phẩm.
+    *   `GenderBadge`: Badge phân loại giới tính sản phẩm (Men / Women / Unisex).
+    *   `ProductImage`: Wrapper bọc `expo-image` với caching và placeholder chuẩn hóa.
 *   **reviews/**:
     *   `RatingStars`: Vẽ các ngôi sao vàng (nguyên vẹn, một nửa, hoặc rỗng) dựa trên điểm số lẻ.
     *   `RatingGroup`: Khối phân tích chi tiết tổng quan số sao (ví dụ: có bao nhiêu đánh giá 5 sao, 4 sao...).
+    *   `ReviewCard`: Card hiển thị một bài đánh giá chi tiết, gồm avatar, tên, ngày, nội dung và nút "Hữu ích" (Like) lưu offline.
 *   **ai/**:
-    *   `StyleQuiz`: Bộ câu hỏi trắc nghiệm tìm phong cách.
-    *   `OccasionSelector`: Các thẻ chọn sự kiện như đi làm, đi tiệc, đi chơi...
+    *   `StyleQuiz`: Bộ câu hỏi trắc nghiệm tìm phong cách (chọn dịp, màu, ngân sách, style).
+    *   `OccasionSelector`: Các thẻ chọn sự kiện nhanh như đi làm, đi tiệc, đi chơi...
+    *   `RecommendationCard`: Card hiển thị kết quả gợi ý túi xách từ AI, gồm lý do giải thích và danh sách sản phẩm phù hợp.
 
 ---
 
@@ -218,7 +225,7 @@ sequenceDiagram
 
 ---
 
-## 👨‍🏫 5. Bộ Câu Hỏi Vấn Đáp Bảo Vệ Đồ Án (lecturer Q&A)
+## 👨‍🏫 5. Bộ Câu Hỏi Vấn Đáp (lecturer Q&A)
 
 Dưới đây là những câu hỏi giảng viên rất hay hỏi để kiểm tra xem bạn tự làm hay đi chép code, kèm theo câu trả lời ngắn gọn, thông minh:
 
