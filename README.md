@@ -18,8 +18,9 @@ Tài liệu này được viết chi tiết từ A-Z với ngôn ngữ dễ hi�
 | **React Navigation (v7)** | Thư viện điều hướng chuyển màn hình chính của React Native, quản lý luồng dịch chuyển (Routing). | Sử dụng Stack Navigator (chồng màn hình lên nhau) và Bottom Tab Navigator (thanh điều hướng dưới cùng) đúng chuẩn UX di động. |
 | **React Native Reanimated** | Thư viện xử lý hiệu ứng chuyển động (Animations) hiệu năng cao. | Các chuyển động như trượt thanh active tab, hiệu ứng loading pulse được tính toán trực tiếp ở luồng hệ thống (UI Thread) nên không bị giật lag khi CPU bận. |
 | **AsyncStorage** | Cơ sở dữ liệu dạng Key-Value lưu trực tiếp trên bộ nhớ thiết bị di động (tương tự LocalStorage của Web). | Giúp lưu danh sách túi xách yêu thích (Favorites) và số lượng thích đánh giá (Review Likes) không bị mất khi tắt app. |
-| **Expo Location & Maps** | Thư viện hỗ trợ lấy tọa độ GPS từ thiết bị và hiển thị bản đồ trực quan. | Dùng bản đồ Leaflet.js chạy trong WebView để đảm bảo hiển thị đồng bộ, mượt mà trên cả Android/iOS mà không cần cấu hình Google Maps SDK phức tạp. |
+| **Expo Location & Maps** | Thư viện hỗ trợ lấy tọa độ GPS từ thiết bị và hiển thị bản đồ trực quan. | Dùng bản đồ Leaflet.js chạy trong WebView (`react-native-webview`) để đảm bảo hiển thị đồng bộ, mượt mà trên cả Android/iOS mà không cần cấu hình Google Maps SDK phức tạp. |
 | **Expo Image & ImagePicker** | Thư viện quản lý ảnh nâng cao (caching) và truy cập camera/thư viện ảnh điện thoại. | Giúp tải ảnh cực nhanh nhờ cơ chế lưu bộ đệm (cache) trên ổ cứng và hỗ trợ chụp ảnh để tìm kiếm phong cách túi xách bằng AI. |
+| **expo-blur** | Thư viện tạo hiệu ứng kính mờ (Glassmorphism). | Dùng cho CustomTabBar tạo hiệu ứng thanh điều hướng lơ lửng mờ, tăng tính thẩm mỹ cao cấp cho UI. |
 
 ---
 
@@ -87,7 +88,7 @@ handbag-app/
 
 ### 🔌 Lớp Tương Tác Dữ Liệu (`src/services/` - Cực Kỳ Quan Trọng)
 *   [handbagApi.ts](file:///d:/Workspace/CN7/MMA/assignment/handbag-app/src/services/handbagApi.ts): Quản lý việc kết nối mạng. File này định nghĩa địa chỉ Mock API (`BASE_URL`). Nếu chưa cấu hình Mock API trực tuyến, file tự động trả về danh sách túi tĩnh cục bộ sau một khoảng thời gian chờ (delay) giả lập để giao diện vẫn hoạt động trơn tru.
-*   `aiService.ts`: Trái tim xử lý AI của ứng dụng. Chứa thuật toán tính điểm sự phù hợp của túi xách dựa trên khảo sát người dùng (`scoreHandbag`) và phân tích ngẫu nhiên phong cách từ ảnh chụp. Nó cũng chừa sẵn hàm kết nối với API Gemini thật của Google khi được cấu hình.
+*   `aiService.ts`: Trái tim xử lý AI của ứng dụng. Chứa thuật toán tính điểm sự phù hợp của túi xách dựa trên khảo sát người dùng (`scoreHandbag`) và phân tích ngẫu nhiên phong cách từ ảnh chụp. Tích hợp **n8n webhook** để gửi dữ liệu quiz và ảnh lên workflow AI thực tế — nếu chưa cấu hình, tự động fallback về thuật toán rule-based cục bộ. Cũng chừa sẵn điểm kết nối API Gemini của Google khi được cấu hình.
 *   `favoriteStorage.ts`: Đọc/Ghi danh sách túi xách yêu thích vào bộ nhớ `AsyncStorage` để dữ liệu tồn tại vĩnh viễn trên máy khách.
 *   `reviewLikesStorage.ts`: Quản lý việc người dùng bấm "Hữu ích" (Like) các bình luận đánh giá, lưu trạng thái thích vào thiết bị tránh việc một người bấm thích vô hạn lần.
 
@@ -126,8 +127,8 @@ Gồm nhiều thành phần giao diện nhỏ tự dựng (Custom Components) th
 *   `ReviewsScreen.tsx`: Hiển thị chi tiết tất cả các đánh giá của sản phẩm, lọc đánh giá theo số sao (ví dụ: chỉ xem các đánh giá 5 sao) và sắp xếp đánh giá theo độ mới/độ hữu ích.
 *   `FavoritesScreen.tsx`: Danh sách túi xách người dùng đã lưu. Hỗ trợ nhấn giữ để chuyển sang chế độ chọn hàng loạt để xóa.
 *   `AIStylistScreen.tsx`: Gồm 2 tab:
-    1.  *Style Quiz*: Trả lời trắc nghiệm nhanh để hệ thống chấm điểm và gợi ý túi xách phù hợp nhất.
-    2.  *Image Search*: Cho phép mở Camera chụp ảnh trang phục hoặc chọn ảnh từ thư viện, giả lập AI quét ảnh nhận diện màu sắc, phong cách để tìm túi tương ứng.
+    1.  *Style Quiz*: Trả lời trắc nghiệm nhanh (chọn dịp, màu sắc ưa thích, ngân sách, phong cách) để hệ thống chấm điểm và gợi ý túi xách phù hợp nhất — kết nối n8n webhook hoặc fallback rule-based.
+    2.  *Image Search*: Chọn ảnh trang phục từ thư viện hoặc chụp ảnh trực tiếp, AI phân tích màu sắc và phong cách từ ảnh để tìm túi tương ứng — kết nối n8n webhook hoặc fallback mock.
 *   `StoreLocatorScreen.tsx`: Tích hợp bản đồ Leaflet chạy trên nền web (thông qua `WebView`). Cho phép định vị GPS người dùng để tính khoảng cách đường chim bay (Haversine formula), hiển thị danh sách showroom dạng Bottom Sheet có thể kéo mở rộng, có nút gọi hotline hoặc điều hướng qua Google/Apple Maps thật.
 
 ---

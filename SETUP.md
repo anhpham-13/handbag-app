@@ -57,13 +57,9 @@ npm install @google/generative-ai
 
 Then open `src/services/aiService.ts` and uncomment the `getGeminiRecommendation` function at the bottom of the file. Replace `YOUR_GEMINI_API_KEY` with your key from https://aistudio.google.com.
 
-## 5. Optional: Add Map support
+## 5. Map support (already configured)
 
-```bash
-npx expo install react-native-maps
-```
-
-Then open `src/screens/StoreLocatorScreen.tsx` and follow the comment block at the top of the file to replace `<MapPlaceholder>` with the real `<MapView>` component.
+`react-native-maps` is already installed and configured. The Store Locator screen uses a **Leaflet.js map inside a WebView** (`react-native-webview`) for cross-platform compatibility — no additional setup required.
 
 ## Demo Flow (for grading)
 
@@ -75,8 +71,8 @@ Then open `src/screens/StoreLocatorScreen.tsx` and follow the comment block at t
 6. On Detail → favorite heart → saved to AsyncStorage
 7. Tab to Favorites → see saved items
 8. Long-press or tap select mode → remove one / multiple / all
-9. Tab to AI Stylist → Style Quiz tab → choose preferences → get recommendations
-10. AI Stylist → By Occasion tab → tap Business Meeting → instant suggestions
+9. Tab to AI Stylist → **Style Quiz** tab → choose occasion / color / budget / style → get AI recommendations
+10. AI Stylist → **Image Search** tab → choose photo from gallery or take a photo → AI detects style → shows matching bags
 11. Tab to Stores → see store list with expand/call/directions
 
 ## Architecture Notes
