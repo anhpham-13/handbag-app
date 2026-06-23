@@ -3,13 +3,16 @@ import { getReviewsForHandbag } from '../data/mockReviews';
 import { STORES } from '../data/stores';
 
 // ─────────────────────────────────────────────────────────────────────────────
-// IMPORTANT: Replace YOUR_PROJECT_ID with your MockAPI project ID.
+// SETUP: Copy .env.example to .env and fill in your MockAPI project ID.
 // 1. Go to https://mockapi.io and create a project.
 // 2. Add a resource named "handbags" with the fields listed below.
-// 3. Paste your project ID here.
+// 3. Set EXPO_PUBLIC_MOCKAPI_BASE_URL in your .env file.
 // Fields: id, handbagName, cost, category, color, gender, uri, brand, percentOff
+// If not configured, the app falls back to built-in local data automatically.
 // ─────────────────────────────────────────────────────────────────────────────
-const BASE_URL = 'https://YOUR_PROJECT_ID.mockapi.io/api/v1';
+const BASE_URL =
+  process.env.EXPO_PUBLIC_MOCKAPI_BASE_URL ??
+  'https://YOUR_PROJECT_ID.mockapi.io/api/v1';
 
 const BASE_FALLBACK_HANDBAGS = [
   {

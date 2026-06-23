@@ -195,10 +195,15 @@ export const getOccasionSuggestion = (
 };
 
 // ── n8n Integration Webhook Configuration ─────────────────────────────────────
-// Replace these URLs with your actual n8n trigger webhooks (active production/tunnel URLs)
+// Set EXPO_PUBLIC_N8N_QUIZ_WEBHOOK and EXPO_PUBLIC_N8N_IMAGE_WEBHOOK in your
+// .env file (copy from .env.example). If not set, falls back to mock logic.
 // Example: 'https://YOUR_N8N_INSTANCE.ngrok-free.app/webhook/style-quiz'
-const N8N_QUIZ_WEBHOOK_URL = 'https://YOUR_N8N_INSTANCE.ngrok-free.app/webhook/style-quiz';
-const N8N_IMAGE_WEBHOOK_URL = 'https://YOUR_N8N_INSTANCE.ngrok-free.app/webhook/image-style';
+const N8N_QUIZ_WEBHOOK_URL =
+  process.env.EXPO_PUBLIC_N8N_QUIZ_WEBHOOK ??
+  'https://YOUR_N8N_INSTANCE.ngrok-free.app/webhook/style-quiz';
+const N8N_IMAGE_WEBHOOK_URL =
+  process.env.EXPO_PUBLIC_N8N_IMAGE_WEBHOOK ??
+  'https://YOUR_N8N_INSTANCE.ngrok-free.app/webhook/image-style';
 
 export const getAIRecommendation = async (
   input: AIStyleInput,

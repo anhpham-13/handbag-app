@@ -30,8 +30,8 @@ ios/build/
 .env.local
 .env.production
 .env.staging
-*.env
-secrets.json
+# Allow the example template to be committed
+!.env.example
 google-services.json
 GoogleService-Info.plist
 

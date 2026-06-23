@@ -7,7 +7,27 @@ cd handbag-app
 npm install
 ```
 
-## 2. Configure MockAPI
+## 2. Set up environment variables
+
+```bash
+# Copy the example file
+copy .env.example .env
+```
+
+Then open `.env` and fill in your values:
+
+```env
+# MockAPI — product data (optional, app uses built-in fallback if not set)
+EXPO_PUBLIC_MOCKAPI_BASE_URL=https://YOUR_PROJECT_ID.mockapi.io/api/v1
+
+# n8n AI webhooks (optional, app uses rule-based fallback if not set)
+EXPO_PUBLIC_N8N_QUIZ_WEBHOOK=https://xxx.ngrok-free.app/webhook/style-quiz
+EXPO_PUBLIC_N8N_IMAGE_WEBHOOK=https://xxx.ngrok-free.app/webhook/image-style
+```
+
+> **Note:** All variables are **optional**. Without them, the app runs perfectly using built-in fallback data and local AI logic — great for quick demos.
+
+### Setting up MockAPI (optional)
 
 1. Go to https://mockapi.io and create a free account
 2. Create a new project
@@ -25,13 +45,7 @@ npm install
 | brand       | String | Bvlgari                |
 | percentOff  | Number | 15                     |
 
-4. Copy your project ID from the URL (e.g. `https://abc123.mockapi.io`)
-5. Open `src/services/handbagApi.ts` and replace `YOUR_PROJECT_ID`:
-   ```ts
-   const BASE_URL = 'https://abc123.mockapi.io/api/v1';
-   ```
-
-> **Note:** Until you set the real URL, the app uses built-in fallback data so you can demo everything immediately.
+4. Copy your project ID from the URL (e.g. `https://abc123.mockapi.io`) and paste it into `.env`
 
 ## 3. Run the app
 
@@ -51,11 +65,9 @@ npx expo start --ios
 
 ## 4. Optional: Add Gemini AI
 
-```bash
-npm install @google/generative-ai
-```
-
-Then open `src/services/aiService.ts` and uncomment the `getGeminiRecommendation` function at the bottom of the file. Replace `YOUR_GEMINI_API_KEY` with your key from https://aistudio.google.com.
+Keep the Gemini API key **in your n8n workflow** (not in the app) to avoid exposing it in the bundle.
+The `aiService.ts` already integrates with n8n webhooks — set `EXPO_PUBLIC_N8N_QUIZ_WEBHOOK` and
+`EXPO_PUBLIC_N8N_IMAGE_WEBHOOK` in your `.env` to activate the real AI flow.
 
 ## 5. Map support (already configured)
 
