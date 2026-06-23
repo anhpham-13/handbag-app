@@ -1,0 +1,56 @@
+# ─── Node / npm ────────────────────────────────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# ─── Expo ──────────────────────────────────────────────────────────────────────
+.expo/
+dist/
+web-build/
+expo-env.d.ts
+
+# ─── Android build artifacts ───────────────────────────────────────────────────
+android/.gradle/
+android/app/build/
+android/build/
+android/local.properties
+android/app/debug.keystore
+android/app/release/
+*.apk
+*.aab
+
+# ─── iOS build artifacts ───────────────────────────────────────────────────────
+ios/Pods/
+ios/build/
+*.ipa
+
+# ─── Environment & Secrets ─────────────────────────────────────────────────────
+.env
+.env.local
+.env.production
+.env.staging
+*.env
+secrets.json
+google-services.json
+GoogleService-Info.plist
+
+# ─── OS & Editor ───────────────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+desktop.ini
+.idea/
+.vscode/settings.json
+*.sublime-workspace
+
+# ─── TypeScript ────────────────────────────────────────────────────────────────
+*.tsbuildinfo
+
+# ─── Misc ──────────────────────────────────────────────────────────────────────
+.cache/
+*.log
+scratch_export/
